@@ -116,7 +116,9 @@ def get_dashboard_data(db):
 
     historical_data = get_historical_admissions(db)
 
-    ai_prediction = "test"
+    ai_prediction = generate_ai_insight(historical_data)
+
+    print("AI RESPONSE =", ai_prediction)
 
     data = {
         "total_admissions": get_total_admissions(db),
