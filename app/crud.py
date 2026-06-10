@@ -116,7 +116,7 @@ def get_dashboard_data(db):
 
     historical_data = get_historical_admissions(db)
 
-    ai_prediction = generate_ai_insight(historical_data)
+    ai_prediction = "test"
 
     data = {
         "total_admissions": get_total_admissions(db),
@@ -127,6 +127,6 @@ def get_dashboard_data(db):
         "ai_prediction": ai_prediction
     }
 
-    save_dashboard_cache(data)
+    #save_dashboard_cache(data)
 
     return data
