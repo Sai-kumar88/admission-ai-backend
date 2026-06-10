@@ -52,28 +52,28 @@ def calculate_prediction(historical_data):
 def generate_ai_insight(historical_data):
 
     historical_data = clean_historical_data(historical_data)
-
     prompt = f"""
     You are an admission analytics expert.
 
     Historical Admission Data:
     {historical_data}
 
-    Analyze the historical admissions data and predict next year's admissions.
+    Rules:
 
-    Return ONLY valid JSON.
+    1. Use only the provided data.
+    2. Ignore abnormal spikes and outliers.
+    3. Focus on the most recent realistic admission trend.
+    4. Do not predict more than 20% growth unless the data clearly supports it.
+    5. If data is inconsistent, give a conservative prediction.
+    6. Predicted admissions should remain close to recent years.
+    7. Return ONLY valid JSON.
 
     {{
       "predicted_admissions": number,
       "growth_percentage": number,
       "business_insight": "short explanation"
     }}
-
-    Do not return markdown.
-    Do not return code.
-    Do not return explanations outside JSON.
     """
-
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         temperature=0,
