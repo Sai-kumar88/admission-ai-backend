@@ -29,30 +29,6 @@ def clean_historical_data(historical_data):
 
     return cleaned
 
-
-def calculate_prediction(historical_data):
-
-    values = []
-
-    for row in historical_data:
-        if row["total"] > 20:
-            values.append(row["total"])
-
-    recent = values[-3:]
-
-    predicted = round(sum(recent) / len(recent))
-
-    growth = round(
-        ((predicted - recent[-1]) / recent[-1]) * 100,
-        2
-    )
-
-    return {
-        "predicted_admissions": predicted,
-        "growth_percentage": growth
-    }
-
-
 def generate_ai_insight(historical_data):
 
     historical_data = clean_historical_data(historical_data)
@@ -65,7 +41,6 @@ def generate_ai_insight(historical_data):
 
     Rules:
 
-
    1. Use only the provided cleaned data.
    2. Analyze recent admission trends.
    3. Predict next year's admissions.
@@ -75,8 +50,6 @@ def generate_ai_insight(historical_data):
     {{
       "predicted_admissions": number,
       "growth_percentage": number,
-      "trend": "Stable Growth / Declining / Rapid Growth",
-      "risk_level": "Low / Medium / High",
       "business_insight": "short explanation"
     }}
     """
