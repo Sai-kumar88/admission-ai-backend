@@ -17,11 +17,11 @@ def generate_ai_insight(historical_data):
 
     Return ONLY valid JSON.
 
-    {
-    "predicted_admissions": number,
-      "growth_percentage": number,
-      "business_insight": "short explanation"
-    }
+   {{
+  "predicted_admissions": number,
+  "growth_percentage": number,
+  "business_insight": "short explanation"
+   }}
 
     Do not return 0 values.
     Do not return sample data.
