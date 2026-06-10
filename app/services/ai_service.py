@@ -1,9 +1,13 @@
 from groq import Groq
 import os
+import json
+
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
+
 def generate_ai_insight(historical_data):
+
     prompt = f"""
     You are an admission analytics expert.
 
@@ -11,7 +15,6 @@ def generate_ai_insight(historical_data):
     {historical_data}
 
     Rules:
-
     1. Use the admission data provided only.
     2. Analyze admission trends using previous academic years.
     3. Predict next year's admissions realistically.
@@ -28,11 +31,8 @@ def generate_ai_insight(historical_data):
         "growth_percentage": number,
         "business_insight": "short business explanation"
     }}
-
-    Do not return Python code.
-    Do not return markdown.
-    Do not explain calculations.
     """
+
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[
@@ -43,4 +43,6 @@ def generate_ai_insight(historical_data):
         ]
     )
 
-    return response.choices[0].message.content
+    content = response.choices[0].message.content
+
+    return json.loads(content)
