@@ -7,29 +7,26 @@ client = Groq(
 )
 
 def generate_ai_insight(historical_data):
-
     prompt = f"""
     You are an admission analytics expert.
 
     Historical Admission Data:
     {historical_data}
 
-    Rules:
-    1. Use the admission data provided only.
-    2. Analyze admission trends using previous academic years.
-    3. Predict next year's admissions realistically.
-    4. Do NOT generate extreme growth percentages.
-    5. Do NOT invent data that is not supported by the historical data.
-    6. If the trend is uncertain, provide a conservative prediction.
-    7. The predicted admissions should be reasonably close to recent academic years.
-    8. Return valid JSON only.
+    Return ONLY a JSON object.
 
-    Return ONLY:
+    Do not explain.
+    Do not provide Python code.
+    Do not provide markdown.
+    Do not provide text before JSON.
+    Do not provide text after JSON.
+
+    Output format:
 
     {{
-        "predicted_admissions": number,
-        "growth_percentage": number,
-        "business_insight": "short business explanation"
+      "predicted_admissions": 0,
+      "growth_percentage": 0,
+      "business_insight": ""
     }}
     """
     response = client.chat.completions.create(
@@ -43,7 +40,7 @@ def generate_ai_insight(historical_data):
         ]
     )
 
-    
+
     content = response.choices[0].message.content
 
     print("AI RESPONSE =", content)
