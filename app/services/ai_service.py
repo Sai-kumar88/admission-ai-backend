@@ -6,6 +6,25 @@ client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
 
+def clean_historical_data(historical_data):
+
+    cleaned = []
+
+    for row in historical_data:
+
+        year = row["academic_year"]
+        total = row["total"]
+
+        if total <= 20:
+            continue
+
+        if year == "8193-8194":
+            continue
+
+        cleaned.append(row)
+
+    return cleaned
+
 
 def calculate_prediction(historical_data):
 
@@ -31,6 +50,9 @@ def calculate_prediction(historical_data):
 
 
 def generate_ai_insight(historical_data):
+
+    historical_data = clean_historical_data(historical_data)
+
     prompt = f"""
     You are an admission analytics expert.
 
@@ -41,15 +63,12 @@ def generate_ai_insight(historical_data):
 
     Return ONLY valid JSON.
 
-   {{
-  "predicted_admissions": number,
-  "growth_percentage": number,
-  "business_insight": "short explanation"
-   }}
+    {{
+      "predicted_admissions": number,
+      "growth_percentage": number,
+      "business_insight": "short explanation"
+    }}
 
-    Do not return 0 values.
-    Do not return sample data.
-    Calculate prediction from the provided historical data.
     Do not return markdown.
     Do not return code.
     Do not return explanations outside JSON.
@@ -65,7 +84,6 @@ def generate_ai_insight(historical_data):
             }
         ]
     )
-
 
     content = response.choices[0].message.content
 
