@@ -6,6 +6,30 @@ client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
 
+
+def calculate_prediction(historical_data):
+
+    values = []
+
+    for row in historical_data:
+        if row["total"] > 20:
+            values.append(row["total"])
+
+    recent = values[-3:]
+
+    predicted = round(sum(recent) / len(recent))
+
+    growth = round(
+        ((predicted - recent[-1]) / recent[-1]) * 100,
+        2
+    )
+
+    return {
+        "predicted_admissions": predicted,
+        "growth_percentage": growth
+    }
+
+
 def generate_ai_insight(historical_data):
     prompt = f"""
     You are an admission analytics expert.
