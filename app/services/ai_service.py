@@ -13,22 +13,24 @@ def generate_ai_insight(historical_data):
     Historical Admission Data:
     {historical_data}
 
-    Return ONLY a JSON object.
+    Analyze the historical admissions data and predict next year's admissions.
 
-    Do not explain.
-    Do not provide Python code.
-    Do not provide markdown.
-    Do not provide text before JSON.
-    Do not provide text after JSON.
+    Return ONLY valid JSON.
 
-    Output format:
+    {
+    "predicted_admissions": number,
+      "growth_percentage": number,
+      "business_insight": "short explanation"
+    }
 
-    {{
-      "predicted_admissions": 0,
-      "growth_percentage": 0,
-      "business_insight": ""
-    }}
+    Do not return 0 values.
+    Do not return sample data.
+    Calculate prediction from the provided historical data.
+    Do not return markdown.
+    Do not return code.
+    Do not return explanations outside JSON.
     """
+
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         temperature=0,
