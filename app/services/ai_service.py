@@ -43,6 +43,9 @@ def generate_ai_insight(historical_data):
         ]
     )
 
+    
     content = response.choices[0].message.content
 
-    return json.loads(content)
+    print("AI RESPONSE =", content)
+
+    return content
