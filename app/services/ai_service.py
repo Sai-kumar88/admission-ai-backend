@@ -75,10 +75,11 @@ def generate_ai_insight(historical_data):
       "business_insight": "short explanation"
     }}
     """
-    
+
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         temperature=0,
+        response_format={"type": "json_object"},
         messages=[
             {
                 "role": "user",
@@ -91,4 +92,4 @@ def generate_ai_insight(historical_data):
 
     print("AI RESPONSE =", content)
 
-    return content
+    return json.loads(content)
