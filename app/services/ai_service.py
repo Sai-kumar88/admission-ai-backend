@@ -21,6 +21,10 @@ def clean_historical_data(historical_data):
         if year == "8193-8194":
             continue
 
+        # remove abnormal spike
+        if total > 1000:
+            continue
+
         cleaned.append(row)
 
     return cleaned
@@ -61,11 +65,12 @@ def generate_ai_insight(historical_data):
 
     Rules:
 
-    1. Use only the provided data.
-    2. Ignore abnormal spikes and outliers.
-    3. Focus on the most recent realistic admission trend.
-    4. If data is inconsistent, give a conservative prediction.
-    5. Return ONLY valid JSON.
+
+   1. Use only the provided cleaned data.
+   2. Analyze recent admission trends.
+   3. Predict next year's admissions.
+   4. Return realistic growth percentage.
+   5. Return ONLY valid JSON.
 
     {{
       "predicted_admissions": number,
