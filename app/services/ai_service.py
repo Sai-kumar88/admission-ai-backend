@@ -5,51 +5,26 @@ import json
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
+def generate_ai_insight(prediction):
 
-def clean_historical_data(historical_data):
-
-    cleaned = []
-
-    for row in historical_data:
-
-        year = row["academic_year"]
-        total = row["total"]
-
-        if total <= 20:
-            continue
-
-        if year == "8193-8194":
-            continue
-
-        # remove abnormal spike
-        if total > 1000:
-            continue
-
-        cleaned.append(row)
-
-    return cleaned
-
-def generate_ai_insight(historical_data):
-
-    historical_data = clean_historical_data(historical_data)
-    print("CLEANED DATA =", historical_data)
     prompt = f"""
     You are an admission analytics expert.
 
-    Historical Admission Data:
-    {historical_data}
+    Prediction Result:
+
+    Predicted Admissions: {prediction["predicted_admissions"]}
+
+    Growth Status: {prediction["growth_status"]}
 
     Rules:
 
-   1. Use only the provided cleaned data.
-   2. Analyze recent admission trends.
-   3. Predict next year's admissions.
-   4. Return realistic growth percentage.
-   5. Return ONLY valid JSON.
+    1. Do not mention percentages.
+    2. Do not mention decline or negative growth.
+    3. Generate a positive and professional business insight.
+    4. Keep it to one sentence.
+    5. Return ONLY valid JSON.
 
     {{
-      "predicted_admissions": number,
-      "growth_percentage": number,
       "business_insight": "short explanation"
     }}
     """

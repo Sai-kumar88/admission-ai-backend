@@ -1,3 +1,4 @@
+from app.services.ml_service import predict_admissions
 from app.services.ai_service import generate_ai_insight
 from sqlalchemy import text
 import json
@@ -116,9 +117,13 @@ def get_dashboard_data(db):
 
     historical_data = get_historical_admissions(db)
 
-    ai_prediction = generate_ai_insight(historical_data)
+    prediction = predict_admissions(historical_data)
 
-    print("AI RESPONSE =", ai_prediction)
+    insight = generate_ai_insight(prediction)
+
+    print("PREDICTION =", prediction)
+
+    print("AI INSIGHT =", insight)
 
     data = {
         "total_admissions": get_total_admissions(db),
@@ -126,9 +131,11 @@ def get_dashboard_data(db):
         "class_wise": get_class_wise(db),
         "historical_admissions": historical_data,
         "funnel_analysis": get_funnel_analysis(db),
-        "ai_prediction": ai_prediction
+        "predicted_admissions": prediction["predicted_admissions"],
+        "growth_status": prediction["growth_status"],
+        "ai_insight": insight["business_insight"]
     }
 
-
+    save_dashboard_cache(data)
 
     return data
