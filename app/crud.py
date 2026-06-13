@@ -119,7 +119,9 @@ def get_dashboard_data(db):
 
     prediction = predict_admissions(historical_data)
 
-    insight = generate_ai_insight(prediction)
+    insight = {
+        "business_insight": "Admissions trend analysis generated successfully."
+    }
 
     print("PREDICTION =", prediction)
 
