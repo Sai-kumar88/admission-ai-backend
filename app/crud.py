@@ -1,33 +1,14 @@
 from app.services.ml_service import predict_admissions
 from app.services.ai_service import generate_ai_insight
 from sqlalchemy import text
-import json
-import os
 
-CACHE_FILE = "app/cache/dashboard.json"
 
 def get_cached_dashboard():
-
-    if os.path.exists(CACHE_FILE):
-
-        print("CACHE HIT")
-
-        try:
-            with open(CACHE_FILE, "r") as f:
-                return json.load(f)
-
-        except Exception:
-            return None
-
     print("DATABASE HIT")
     return None
 
 def save_dashboard_cache(data):
-
-    os.makedirs("app/cache", exist_ok=True)
-
-    with open(CACHE_FILE, "w") as f:
-        json.dump(data, f, indent=4)
+    return
 
 def get_total_admissions(db):
 
